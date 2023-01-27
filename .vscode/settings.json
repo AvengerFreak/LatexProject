@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\starw\\Downloads\\jar_files\\jlatexmath-1.0.7.jar",
+        "c:\\Users\\starw\\Downloads\\jar_files\\jlatexmath-font-cyrillic-1.0.7.jar",
+        "c:\\Users\\starw\\Downloads\\jar_files\\jlatexmath-font-greek-1.0.7.jar"
+    ]
+}
