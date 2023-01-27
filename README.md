@@ -7,7 +7,7 @@ Demo Instructions:
 2. Navigate to the MathChat directory
 3. Run the Server.java class
 4. Run Client.java at least twice
-5. type in formula: <latex formula> to see the Text Icon 
+5. Type in "formula:" followed by a latex formula to see the Text Icon. For example, "formula: k_{n+1} = n^2 + k_n^2 - k_{n-1}"
 
 *you can find latex formulas to use here: https://en.wikibooks.org/wiki/LaTeX/Mathematics
 
