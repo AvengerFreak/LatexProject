@@ -6,6 +6,8 @@ package MathChat;
  * @since 1.2
 */
 
+// TODO - better grafics with this tutorial: https://github.com/vkhanhqui/chat-web-app
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
