@@ -2,18 +2,18 @@ package MathChat;
 
 /** Connects a user to a server in order to join a Multi User chat.
  * @author Sha�na N. Mu�oz
- * @version 1.0
- * @since 1.0
+ * @version 1.2
+ * @since 1.2
 */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -105,34 +105,16 @@ public class Client {
 
     private String getServerAddress() {
     	
-    	address = JOptionPane.showInputDialog(
-                frame,
-                "Enter a valid IP Address:",
-                "IP Address",
-                JOptionPane.QUESTION_MESSAGE);
+        try{
+            InetAddress IP = InetAddress.getLocalHost();
+            return IP.getHostAddress();
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     	
-    	String regex = "^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$";
-    	
-    	Pattern pattern = Pattern.compile(regex);
-    	
-        Matcher matcher = pattern.matcher(address);
-    	
-		while (address.isEmpty() || !matcher.matches()) {
-		    		
-			JOptionPane.showMessageDialog(frame, "Please enter a valid IP address.");
-    		
-			address = JOptionPane.showInputDialog(
-                    frame,
-                    "Enter a valid IP Address:",
-                    "IP Address",
-                    JOptionPane.QUESTION_MESSAGE);
-			
-			pattern = Pattern.compile(regex);
-			
-			matcher = pattern.matcher(address);
-		}
-		
-		return address;
     }
 
     /** 
@@ -245,7 +227,7 @@ public class Client {
 
 				try
 				{
-				    doc.insertString(doc.getLength(), first, null ); /* @author Luis Ramos Espinosa */
+				    doc.insertString(doc.getLength(), first, null ); 
 				    //doc.insertString(doc.getLength(), "\nEnd of text", keyWord );
 				}
 				catch(Exception e) { System.out.println(e); }
@@ -256,7 +238,6 @@ public class Client {
 				ti.paintIcon(new JLabel(), b.getGraphics(), 0, 0);
 				messageArea.insertIcon(ti);
 				
-				/* @author Luis Ramos Espinosa*/
 				try {
 					doc.insertString(doc.getLength(), "\n\n", null);
 				} catch (BadLocationException e) {
