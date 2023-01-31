@@ -1,7 +1,7 @@
 package MathChat;
 
 /** Connects a user to a server in order to join a Multi User chat.
- * @author Shaína N. Muñoz
+ * @author Shaï¿½na N. Muï¿½oz
  * @version 1.0
  * @since 1.0
 */
@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,13 +45,13 @@ public class Client {
     PrintWriter out;
     String name;
     String address;
-    JFrame frame = new JFrame("Chat");
+    JFrame frame = new JFrame("Math Chat");
     JTextField textField = new JTextField(30);
     JTextPane messageArea = new JTextPane();
     JScrollPane scrollPane = new JScrollPane(messageArea);
     DefaultCaret defaultCaret = (DefaultCaret) messageArea.getCaret();
-    AudioInputStream audioInputStream;
-    Clip clip;
+    AudioInputStream sendAudioInputStream, recieveAudioInputStream;
+    Clip sendAudio, recieveAudio;
     StyledDocument doc = messageArea.getStyledDocument();
 
 
@@ -70,11 +71,21 @@ public class Client {
         frame.pack();
         
         try {
-        	audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/Send.wav"));
-        	clip = AudioSystem.getClip();
-        	clip.open(audioInputStream);
+            
+            URL sendUrl = this.getClass().getClassLoader().getResource("MathChat/sounds/send.wav");
+            URL recieveUrl = this.getClass().getClassLoader().getResource("MathChat/sounds/receive.wav");
+
+        	sendAudioInputStream = AudioSystem.getAudioInputStream(sendUrl);
+            recieveAudioInputStream = AudioSystem.getAudioInputStream(recieveUrl);
+        	
+            recieveAudio = AudioSystem.getClip();
+            recieveAudio.open(recieveAudioInputStream);
+
+            sendAudio = AudioSystem.getClip();
+        	sendAudio.open(sendAudioInputStream);
+
 		} catch (Exception e) {
-			System.out.println("Failure to load sound.");
+			e.printStackTrace();
 		}
 
         textField.addActionListener(new ActionListener() {
@@ -82,8 +93,6 @@ public class Client {
             public void actionPerformed(ActionEvent e) {
             	if (!textField.getText().isEmpty()) {
             		out.println(textField.getText());
-            		clip.setFramePosition(0);
-            		clip.start();
             	}
                 textField.setText("");
             }
@@ -193,14 +202,43 @@ public class Client {
             	
             	try
 				{
+                    String sender = line.substring(8, line.indexOf(":"));
+
+                // you are sending message
+                if(sender.equals(name)){
+                    sendAudio.setFramePosition(0);
+                    sendAudio.start();
+                }
+
+                // you are recieving message
+                else{
+                    recieveAudio.setFramePosition(0);
+                    recieveAudio.start();
+                }
+
 				    doc.insertString(doc.getLength(), line.substring(8) + "\n", null );
 				    //doc.insertString(doc.getLength(), "\nEnd of text", keyWord );
 				}
 				catch(Exception e) { System.out.println(e); }
             }
             
+            
             // extract LaTex string from input, create TextIcon and append it to window
             else if(line.startsWith("FORMULA")){
+
+                String sender = line.substring(7, line.indexOf(":"));
+
+                // you are sending message
+                if(sender.equals(name)){
+                    sendAudio.setFramePosition(0);
+                    sendAudio.start();
+                }
+
+                // you are recieving message
+                else{
+                    recieveAudio.setFramePosition(0);
+                    recieveAudio.start();
+                }
         		
             	String first = line.substring(0, line.indexOf("formula:")) + "\n\n";
 				String math = line.substring(line.indexOf("formula:") + 8, line.length());
@@ -227,6 +265,7 @@ public class Client {
 				}
 
         	}
+
         }
     }
 

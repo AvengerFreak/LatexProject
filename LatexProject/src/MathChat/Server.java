@@ -1,7 +1,7 @@
 package MathChat;
 
 /** Creates a Window and displays a sample formula using LaTex.
- * @author Shaína N. Muñoz
+ * @author Shaï¿½na N. Muï¿½oz
  * @version 1.0
  * @since 1.0
 */
